@@ -17,6 +17,8 @@ namespace ReceitasDeSucesso.Controllers
             return View(receita);
         }
 
+
+        [HttpGet]
         public IActionResult CadastroReceita()
         {
             return View();
@@ -29,7 +31,7 @@ namespace ReceitasDeSucesso.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    return View(receita);
+                    return View("Receita",receita);
                 }
                 return View(receita);
 

@@ -34,6 +34,10 @@ namespace ReceitasDeSucesso
                     routes.MapRoute(
                     name: "RotaReceita",
                     template: "{controller=Receita}/{action=Index}/");
+
+                    routes.MapRoute(
+                        name:"CadastroReceita",
+                        template:"{controller=Receita}/{action=CadastroReceita}/");
                 }
                 );
         }
