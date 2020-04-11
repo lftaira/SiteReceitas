@@ -24,13 +24,13 @@ namespace ReceitasDeSucesso.Controllers
 
 
         [HttpGet]
-        public IActionResult CadastroReceita()
+        public IActionResult CadastrarReceita()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CadastroReceita(Receita receita)
+        public async Task<IActionResult> CadastrarReceita(Receita receita)
         {
             try
             {

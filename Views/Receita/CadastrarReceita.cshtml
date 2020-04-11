@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CadastroReceita">
+        <form asp-action="CadastrarReceita">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
@@ -56,7 +56,7 @@
                 <span asp-validation-for="Categoria.Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn shiny-btn" />
                 @TempData["message"]
             </div>
         </form>
