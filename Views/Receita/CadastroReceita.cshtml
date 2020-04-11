@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="View">
+        <form asp-action="CadastroReceita">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
@@ -43,8 +43,21 @@
                 <input asp-for="Tags" class="form-control" />
                 <span asp-validation-for="Tags" class="text-danger"></span>
             </div>
+            <hr />
+            <h4>Categoria da Receita</h4>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" formaction="CadastroReceita" />
+                <label asp-for="Categoria.Titulo" class="control-label"></label>
+                <input asp-for="Categoria.Titulo" class="form-control" />
+                <span asp-validation-for="Categoria.Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria.Descricao" class="control-label"></label>
+                <input asp-for="Categoria.Descricao" class="form-control" />
+                <span asp-validation-for="Categoria.Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                @TempData["message"]
             </div>
         </form>
     </div>
@@ -53,4 +66,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+
 

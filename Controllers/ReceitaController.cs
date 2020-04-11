@@ -4,17 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ReceitasDeSucesso.Models;
+using ReceitasDeSucesso.Client;
 
 namespace ReceitasDeSucesso.Controllers
 {
     public class ReceitaController : Controller
     {
-        public IActionResult Receita()
-        {
-            var receita = new Receita();
-            receita.Descricao = "teste";
+        public IReceitaClient ReceitaClient;
 
-            return View(receita);
+        public ReceitaController(IReceitaClient receitaClient)
+        {
+            ReceitaClient = receitaClient;
+        }
+
+        public IActionResult Receita(Receita receita)
+        {
+            return View("ConsultaReceita",receita);
         }
 
 
@@ -29,11 +34,15 @@ namespace ReceitasDeSucesso.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    return View("Receita",receita);
+                    return View();
                 }
-                return View(receita);
+                await ReceitaClient.InserirReceita(receita);
+
+                TempData["message"] = "Salvo com sucesso!";
+
+                return View(receita) ;
 
             }
             catch (Exception)
