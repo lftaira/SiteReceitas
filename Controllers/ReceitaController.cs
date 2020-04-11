@@ -19,7 +19,7 @@ namespace ReceitasDeSucesso.Controllers
 
         public IActionResult Receita(Receita receita)
         {
-            return View("ConsultaReceita",receita);
+            return View("ConsultaReceita", receita);
         }
 
 
@@ -42,7 +42,7 @@ namespace ReceitasDeSucesso.Controllers
 
                 TempData["message"] = "Salvo com sucesso!";
 
-                return View(receita) ;
+                return View(receita);
 
             }
             catch (Exception)
@@ -51,6 +51,14 @@ namespace ReceitasDeSucesso.Controllers
                 throw;
             }
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> ConsultarReceitas()
+        {
+            var listaReceitas = await ReceitaClient.ObterListaReceita();
+
+            return View(listaReceitas);
+        }
+
     }
 }
