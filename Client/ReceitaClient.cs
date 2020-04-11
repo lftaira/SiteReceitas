@@ -39,9 +39,11 @@ namespace ReceitasDeSucesso.Client
             return JsonConvert.DeserializeObject<Receita>(await httpResponse.Content.ReadAsStringAsync());
         }
 
-        public Task<List<Receita>> ObterListaReceita()
+        public async Task<List<Receita>> ObterListaReceita()
         {
-            throw new NotImplementedException();
+            var httpResponse = await _httpClient.GetAsync(_httpClient.BaseAddress.AbsoluteUri);
+
+            return JsonConvert.DeserializeObject<List<Receita>>(await httpResponse.Content.ReadAsStringAsync());
         }
 
         public Task<Receita> ObterReceita(int id)

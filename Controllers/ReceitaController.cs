@@ -53,7 +53,7 @@ namespace ReceitasDeSucesso.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConsultarReceitas()
+        public async Task<IActionResult> ConsultarReceita()
         {
             var listaReceitas = await ReceitaClient.ObterListaReceita();
 
