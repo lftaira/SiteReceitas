@@ -58,9 +58,9 @@
                         @Html.DisplayFor(modelItem => item.Categoria.Descricao)
                     </td>
                     <td>
-                        @Html.ActionLink("Alterar", "EditarReceita","Receita", new {id = item.ID}) |
-                        @Html.ActionLink("Consultar", "ConsultarReceita","Receita", new {id = item.ID}) | 
-                        @Html.ActionLink("Deletar", "DeletarReceita","Receita", new {ID = item.ID}) |
+                        @Html.ActionLink("Alterar", "EditarReceita", new {id = item.ID}) |
+                        @Html.ActionLink("Consultar", "ConsultarReceita", new {id = item.ID}) | 
+                        @Html.ActionLink("Deletar", "DeletarReceita", new {ID = item.ID}) |
                     </td>
                 </tr>
             }

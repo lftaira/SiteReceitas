@@ -8,6 +8,8 @@ using ReceitasDeSucesso.Service.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ReceitasDeSucesso.ViewModels;
 using AutoMapper;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace ReceitasDeSucesso.Controllers
 {
@@ -67,14 +69,32 @@ namespace ReceitasDeSucesso.Controllers
         [HttpPost]
         public async Task<IActionResult> CadastrarReceita(ReceitaViewModel receitaVm)
         {
-            if (!ModelState.IsValid)
+            using (var memoryStream = new MemoryStream())
+            using (var sw = new StreamWriter(memoryStream))
+            using (var sr = new StreamReader(memoryStream))
+
             {
-                return View();
+                await receitaVm.ImagemDaReceita.CopyToAsync(memoryStream);
+
+                if (!ModelState.IsValid || memoryStream.Length > 2097152)
+                {
+                    ModelState.AddModelError("Imagem", "O arquivo é muito grande.");
+                    return View(receitaVm);
+                }
+
+                Receita receita = await MapearVMeAtualizarCategoria(receitaVm);
+                //var sw = new StreamWriter(memoryStream);
+                sw.Flush();
+                memoryStream.Position = 0;
+                //var sr = new StreamReader(memoryStream);
+                
+                receita.Imagem = sr.ReadToEnd();
+                if (await SalvarReceita(receita))
+                    TempData["message"] = "Salvo com sucesso!";
+                return View(receitaVm);
             }
-            Receita receita = await MapearVMeAtualizarCategoria(receitaVm);
-            if (await SalvarReceita(receita))
-                TempData["message"] = "Salvo com sucesso!";
-            return View(receitaVm);
+
+
         }
 
         private async Task<bool> SalvarReceita(Receita receita)
@@ -113,6 +133,21 @@ namespace ReceitasDeSucesso.Controllers
             return View("EditarReceita", CriarVMePopularListaDeCategoria(await _categoriaService.ObterListaCategoria(), receitaVM));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditarReceita(ReceitaViewModel receitaViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            Receita receita = await MapearVMeAtualizarCategoria(receitaViewModel);
+
+            var httpResponse = await _receitaService.AlterarItem(receita.ID, receita);
+            TempData["message"] = (httpResponse.IsSuccessStatusCode) ? "Salvo com sucesso!" : "Erro ao salvar. Tente novamente mais tarde.";
+            return View(receitaViewModel);
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> DeletarReceita(int? ID)
         {
@@ -121,7 +156,7 @@ namespace ReceitasDeSucesso.Controllers
 
             var httResponse = await _receitaService.DeletarItem(ID);
 
-            return View("ConsultarReceita");
+            return Redirect("/receita/ConsultarReceita");
         }
     }
 }

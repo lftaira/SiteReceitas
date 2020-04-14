@@ -32,6 +32,8 @@ namespace ReceitasDeSucesso
             {
                 cfg.CreateMap<ReceitaViewModel, Receita>();
                 cfg.CreateMap<Receita, ReceitaViewModel>();
+                cfg.CreateMap<IFormFile, byte[]>();
+                cfg.CreateMap<byte[], IFormFile>();
             });
 
             IMapper mapper = config.CreateMapper();
@@ -83,7 +85,7 @@ namespace ReceitasDeSucesso
 
                     routes.MapRoute(
                     name: "Editar Receita",
-                    template:"{controller=Receita}/{action=EditarReceita}/");
+                    template:"{controller=Receita}/{action=EditarReceita}/{id?}");
 
                     routes.MapRoute(
                     name: "Cadastrar Categoria",

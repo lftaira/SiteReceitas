@@ -19,15 +19,17 @@ namespace ReceitasDeSucesso.Service.Implementacao
             _httpClient = httpClient;
 
         }
-        public async Task<HttpResponseMessage> AlterarItem(int id, Receita receita)
+        public async Task<HttpResponseMessage> AlterarItem(Int64 id, Receita receita)
         {
             var httpResponse = await _httpClient.GetAsync(string.Format("{0}/{1}",
                                                 _httpClient.BaseAddress.AbsoluteUri, id.ToString()));
             if (!httpResponse.IsSuccessStatusCode)
                 return httpResponse;
 
+
+            var receitaJson = JsonConvert.SerializeObject(receita);
             return await _httpClient.PutAsync(_httpClient.BaseAddress.AbsoluteUri,
-                                        new StringContent(await httpResponse.Content.ReadAsStringAsync(), encoding: default, "application/json"));
+                                        new StringContent(receitaJson, encoding: default, "application/json"));
         }
         public async Task<HttpResponseMessage> DeletarItem(int? id)
         {
