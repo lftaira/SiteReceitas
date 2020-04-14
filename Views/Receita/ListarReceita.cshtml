@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Receita>
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Titulo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ingredientes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModoDePreparo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tags)
+                </th>
+                <th>
+                    Título da Categoria
+                </th>
+                <th>
+                    Descrição da categoria
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ingredientes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModoDePreparo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tags)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categoria.Titulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categoria.Descricao)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Alterar", "EditarReceita", new {id = item.ID}) |
+                        @Html.ActionLink("Consultar", "ConsultarReceita", new {id = item.ID}) | 
+                        @Html.ActionLink("Deletar", "DeletarReceita", new {ID = item.ID}) |
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

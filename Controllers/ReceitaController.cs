@@ -74,7 +74,6 @@ namespace ReceitasDeSucesso.Controllers
             using (var sr = new StreamReader(memoryStream))
 
             {
-                await receitaVm.ImagemDaReceita.CopyToAsync(memoryStream);
 
                 if (!ModelState.IsValid || memoryStream.Length > 2097152)
                 {
@@ -83,18 +82,33 @@ namespace ReceitasDeSucesso.Controllers
                 }
 
                 Receita receita = await MapearVMeAtualizarCategoria(receitaVm);
-                //var sw = new StreamWriter(memoryStream);
-                sw.Flush();
-                memoryStream.Position = 0;
-                //var sr = new StreamReader(memoryStream);
-                
-                receita.Imagem = sr.ReadToEnd();
-                if (await SalvarReceita(receita))
+                var receitaDB = await SerializarImagemNaViewModel(receita, receitaVm);
+               
+                if (await SalvarReceita(receitaDB))
                     TempData["message"] = "Salvo com sucesso!";
                 return View(receitaVm);
             }
 
 
+        }
+
+        private async Task<Receita> SerializarImagemNaViewModel(Receita receita, ReceitaViewModel receitaVm)
+        {
+            if (receitaVm.ImagemDaReceita == null)
+            {
+                return receita;
+            }
+
+            using (var memoryStream = new MemoryStream())
+            using (var sw = new StreamWriter(memoryStream))
+            using (var sr = new StreamReader(memoryStream))
+            {
+                await receitaVm.ImagemDaReceita.CopyToAsync(memoryStream);
+                sw.Flush();
+                memoryStream.Position = 0;
+                receita.Imagem = sr.ReadToEnd();
+                return receita;
+            }
         }
 
         private async Task<bool> SalvarReceita(Receita receita)
@@ -111,7 +125,7 @@ namespace ReceitasDeSucesso.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConsultarReceita()
+        public async Task<IActionResult> ListarReceita()
         {
             var listaReceitas = await _receitaService.ObterLista();
             return View(listaReceitas);
@@ -156,7 +170,21 @@ namespace ReceitasDeSucesso.Controllers
 
             var httResponse = await _receitaService.DeletarItem(ID);
 
-            return Redirect("/receita/ConsultarReceita");
+            return Redirect("/receita/ListarReceita");
+        }
+
+        public async Task<IActionResult> ConsultarReceita(int ID)
+        {
+            var receita = await _receitaService.ObterItem(ID);
+
+            var receitaVM = _mapper.Map<ReceitaViewModel>(receita);
+
+            using(var ms = new MemoryStream())
+            {
+                
+
+            }
+
         }
     }
 }

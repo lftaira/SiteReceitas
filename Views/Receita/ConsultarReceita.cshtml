@@ -1,69 +1,66 @@
-﻿@model IEnumerable<Receita>
-
+﻿@model ReceitasDeSucesso.ViewModels.ReceitaViewModel
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "ConsultarReceita";
 }
-<div class="container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Titulo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descricao)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Ingredientes)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModoDePreparo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tags)
-                </th>
-                <th>
-                    Título da Categoria
-                </th>
-                <th>
-                    Descrição da categoria
-                </th>
-            </tr>
-        </thead>
 
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Titulo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descricao)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ingredientes)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModoDePreparo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tags)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Categoria.Titulo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Categoria.Descricao)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Alterar", "EditarReceita", new {id = item.ID}) |
-                        @Html.ActionLink("Consultar", "ConsultarReceita", new {id = item.ID}) | 
-                        @Html.ActionLink("Deletar", "DeletarReceita", new {ID = item.ID}) |
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<h1>ConsultarReceita</h1>
+
+<div>
+    <h4>Receita @Model.Titulo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ingredientes)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ingredientes)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ModoDePreparo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ModoDePreparo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tags)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TituloCategoria)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TituloCategoria)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DescricaoCategoria)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DescricaoCategoria)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PrimaryKey }) |
+    <a asp-action="Index">Back to List</a>
 </div>

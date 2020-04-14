@@ -81,7 +81,7 @@ namespace ReceitasDeSucesso
 
                     routes.MapRoute(
                     name: "Consulta de Receitas",
-                    template: "{controller=Receita}/{action=ConsultarReceita}/");
+                    template: "{controller=Receita}/{action=ListarReceita}/");
 
                     routes.MapRoute(
                     name: "Editar Receita",
