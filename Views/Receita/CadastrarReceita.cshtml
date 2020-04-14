@@ -1,62 +1,61 @@
-﻿@model ReceitasDeSucesso.Models.Receita
+﻿@model ReceitasDeSucesso.ViewModels.ReceitaViewModel
 
 @{
     ViewData["Title"] = "Cadastro de uma nova Receita";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="container">
 <h1>Cadastrar uma nova receita</h1>
 
-<h4>Receita</h4>
-<hr />
+<hr/>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CadastrarReceita">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h4>Categoria da Receita</h4>
             <div class="form-group">
-                <label asp-for="Titulo" class="control-label"></label>
+                <option>Selecione uma categoria</option>
+                @Html.ActionLink("Nova Categoria", "CadastrarCategoria", "Categoria")
+                <select asp-for="IdCategoria" asp-items="@Model.listaDeCategorias" class="form-control"></select>
+                <span asp-validation-for="IdCategoria" class="text-danger"></span>
+            </div>
+            <hr/>
+            <h4>Receita</h4>
+            <div class="form-group">
+                <label class="control-label">Título</label>
                 <input asp-for="Titulo" class="form-control" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
+                <label class="control-label">Descrição</label>
+                <textarea asp-for="Descricao" class="form-control"></textarea>
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Ingredientes" class="control-label"></label>
-                <input asp-for="Ingredientes" class="form-control" />
+                <label class="control-label">Ingredientes</label>
+                <textarea asp-for="Ingredientes" class="form-control"></textarea>
                 <span asp-validation-for="Ingredientes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ModoDePreparo" class="control-label"></label>
-                <input asp-for="ModoDePreparo" class="form-control" />
+                <label class="control-label">Modo de Preparo</label>
+                <textarea asp-for="ModoDePreparo" class="form-control"></textarea>
                 <span asp-validation-for="ModoDePreparo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Imagem" class="control-label"></label>
+                <label class="control-label">Imagem</label>
                 <input asp-for="Imagem" class="form-control" />
                 <span asp-validation-for="Imagem" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tags" class="control-label"></label>
+                <label class="control-label">Tags</label>
                 <input asp-for="Tags" class="form-control" />
                 <span asp-validation-for="Tags" class="text-danger"></span>
             </div>
-            <hr />
-            <h4>Categoria da Receita</h4>
+            <hr/>
             <div class="form-group">
-                <label asp-for="Categoria.Titulo" class="control-label"></label>
-                <input asp-for="Categoria.Titulo" class="form-control" />
-                <span asp-validation-for="Categoria.Titulo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Categoria.Descricao" class="control-label"></label>
-                <input asp-for="Categoria.Descricao" class="form-control" />
-                <span asp-validation-for="Categoria.Descricao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn shiny-btn" />
+                <input type="submit" value="Salvar" class="btn btn-sm btn-dark" />
                 @TempData["message"]
             </div>
         </form>
@@ -66,7 +65,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-
-
-
+</div>

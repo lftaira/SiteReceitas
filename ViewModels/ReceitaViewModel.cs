@@ -1,32 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ReceitasDeSucesso.Models;
 
-namespace ReceitasDeSucesso.Models
+namespace ReceitasDeSucesso.ViewModels
 {
-    public class Receita
+    public class ReceitaViewModel
     {
         [Key]
-        public Int64 ID {get; set;}
-
+        public Int64 ID { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Titulo { get; set; }
-
         public string Descricao { get; set; }
-
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Ingredientes { get; set; }
-
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string ModoDePreparo { get; set; }
-
         public string Imagem { get; set; }
-
         public string Tags { get; set; }
-
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public Categoria Categoria { get; set; }
-    }    
+        public List<SelectListItem> listaDeCategorias { get; set; }
+        [Required(ErrorMessage = "O campo categoria é obrigatório")]
+        public int IdCategoria { get; set; }
+        public string TituloCategoria { get; set; }
+        public string DescricaoCategoria { get; set; }
+    }
 }

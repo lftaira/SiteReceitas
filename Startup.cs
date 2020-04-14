@@ -5,7 +5,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ReceitasDeSucesso.Client;
+using ReceitasDeSucesso.Service.Interface;
+using ReceitasDeSucesso.Service.Implementacao;
+using ReceitasDeSucesso.ViewModels;
+using ReceitasDeSucesso.Models;
+using AutoMapper;
 
 namespace ReceitasDeSucesso
 {
@@ -16,16 +20,36 @@ namespace ReceitasDeSucesso
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            services.AddHttpClient<IReceitaClient, ReceitaClient>(client =>
-            {
-                client.BaseAddress = new Uri(Config["URLAPI"]);
-            });
 
+            CriarServices(services);
 
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             Config = builder.Build();
+
+            var config = new AutoMapper.MapperConfiguration(cfg => 
+            {
+                cfg.CreateMap<ReceitaViewModel, Receita>();
+                cfg.CreateMap<Receita, ReceitaViewModel>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
+            services.AddSingleton(mapper);
+        }
+
+        private void CriarServices(IServiceCollection services)
+        {
+            services.AddHttpClient<IReceitaService, ReceitaService>(client =>
+            {
+                client.BaseAddress = new Uri(Config["URLAPI_Receita"]);
+            });
+
+            services.AddHttpClient<ICategoriaService, CategoriaService>(client =>
+            {
+                client.BaseAddress = new Uri(Config["URLAPI_Categoria"]);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -51,11 +75,23 @@ namespace ReceitasDeSucesso
 
                     routes.MapRoute(
                     name: "CadastroReceita",
-                    template: "{controller=Receita}/{action=CadastroReceita}/");
+                    template: "{controller=Receita}/{action=CadastrarReceita}/");
 
                     routes.MapRoute(
                     name: "Consulta de Receitas",
                     template: "{controller=Receita}/{action=ConsultarReceita}/");
+
+                    routes.MapRoute(
+                    name: "Editar Receita",
+                    template:"{controller=Receita}/{action=EditarReceita}/");
+
+                    routes.MapRoute(
+                    name: "Cadastrar Categoria",
+                    template:"{controller=Categoria}/{action=CadastrarCategoria}/");
+
+                    routes.MapRoute(
+                    name: "Deletar Receita",
+                    template:"{controller=Receita}/{action=DeletarReceita}/{ID}");
                 }
                 );
         }
