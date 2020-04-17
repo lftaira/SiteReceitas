@@ -1,21 +1,19 @@
-﻿@model ReceitasDeSucesso.ViewModels.ReceitaViewModel
+﻿@model ReceitasDeSucesso.Models.Receita
 
 @{
-    ViewData["Title"] = "ConsultarReceita";
+    ViewData["Title"] = "Consulta de Receita";
 }
 
-<h1>ConsultarReceita</h1>
-
-<div>
-    <h4>Receita @Model.Titulo</h4>
+<div class="container">
+    <h1>Consultar Receita</h1>
+    <h4>Receita @Model.Titulo </h4>
+    <div>
+        <img src="~/imgs/@Model.Imagem"   
+                         height="50" width="50"   
+                         asp-append-version="true" >
+    </div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ID)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Titulo)
         </dt>
@@ -47,20 +45,23 @@
             @Html.DisplayFor(model => model.Tags)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TituloCategoria)
+            Título
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TituloCategoria)
+            @Html.DisplayFor(model => model.Categoria.Titulo)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DescricaoCategoria)
+            Descrição
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DescricaoCategoria)
+            @Html.DisplayFor(model => model.Categoria.Descricao)
         </dd>
     </dl>
+
+    <hr>
+    <div>
+        @Html.ActionLink("Editar", "EditarReceita", new { id = @Model.ID }) |
+        <a asp-action="ListarReceita">Voltar para Lista</a>
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PrimaryKey }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+

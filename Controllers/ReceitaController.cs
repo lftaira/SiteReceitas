@@ -10,6 +10,10 @@ using ReceitasDeSucesso.ViewModels;
 using AutoMapper;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using System.Text;
+using Microsoft.Net.Http.Headers;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ReceitasDeSucesso.Controllers
 {
@@ -18,13 +22,16 @@ namespace ReceitasDeSucesso.Controllers
         public IReceitaService _receitaService;
         public ICategoriaService _categoriaService;
 
+        public IWebHostEnvironment _webHostEnvironment;
+
         public IMapper _mapper;
 
-        public ReceitaController(IReceitaService receitaClient, ICategoriaService categoriaClient, IMapper mapper)
+        public ReceitaController(IReceitaService receitaClient, ICategoriaService categoriaClient, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _receitaService = receitaClient;
             _categoriaService = categoriaClient;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Receita(Receita receita)
@@ -69,46 +76,34 @@ namespace ReceitasDeSucesso.Controllers
         [HttpPost]
         public async Task<IActionResult> CadastrarReceita(ReceitaViewModel receitaVm)
         {
-            using (var memoryStream = new MemoryStream())
-            using (var sw = new StreamWriter(memoryStream))
-            using (var sr = new StreamReader(memoryStream))
-
+            if (!ModelState.IsValid)
             {
-
-                if (!ModelState.IsValid || memoryStream.Length > 2097152)
-                {
-                    ModelState.AddModelError("Imagem", "O arquivo é muito grande.");
-                    return View(receitaVm);
-                }
-
-                Receita receita = await MapearVMeAtualizarCategoria(receitaVm);
-                var receitaDB = await SerializarImagemNaViewModel(receita, receitaVm);
-               
-                if (await SalvarReceita(receitaDB))
-                    TempData["message"] = "Salvo com sucesso!";
                 return View(receitaVm);
             }
 
+            Receita receita = await MapearVMeAtualizarCategoria(receitaVm);
+            receita.Imagem = SalvarImagemERetornarGUID(receitaVm);
 
+            if (await SalvarReceita(receita))
+                TempData["message"] = "Salvo com sucesso!";
+            return View(receitaVm);
         }
 
-        private async Task<Receita> SerializarImagemNaViewModel(Receita receita, ReceitaViewModel receitaVm)
+        private string SalvarImagemERetornarGUID(ReceitaViewModel receita)
         {
-            if (receitaVm.ImagemDaReceita == null)
+            string guidImage = null;
+            //2097152
+            if (receita.ImagemDaReceita != null)
             {
-                return receita;
+                var pathImagem = Path.Combine(_webHostEnvironment.WebRootPath, "imgs");
+                guidImage = Guid.NewGuid().ToString() + "_" + receita.ImagemDaReceita.FileName.ToString();
+                pathImagem = Path.Combine(pathImagem, guidImage);
+                using (var fileStream = new FileStream(pathImagem, FileMode.Create))
+                {
+                     receita.ImagemDaReceita.CopyTo(fileStream);
+                }
             }
-
-            using (var memoryStream = new MemoryStream())
-            using (var sw = new StreamWriter(memoryStream))
-            using (var sr = new StreamReader(memoryStream))
-            {
-                await receitaVm.ImagemDaReceita.CopyToAsync(memoryStream);
-                sw.Flush();
-                memoryStream.Position = 0;
-                receita.Imagem = sr.ReadToEnd();
-                return receita;
-            }
+            return guidImage;
         }
 
         private async Task<bool> SalvarReceita(Receita receita)
@@ -175,16 +170,7 @@ namespace ReceitasDeSucesso.Controllers
 
         public async Task<IActionResult> ConsultarReceita(int ID)
         {
-            var receita = await _receitaService.ObterItem(ID);
-
-            var receitaVM = _mapper.Map<ReceitaViewModel>(receita);
-
-            using(var ms = new MemoryStream())
-            {
-                
-
-            }
-
+            return View(await _receitaService.ObterItem(ID));
         }
     }
 }
