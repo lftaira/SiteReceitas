@@ -21,10 +21,10 @@ namespace ReceitasDeSucesso.Controllers
     {
         public IReceitaService _receitaService;
         public ICategoriaService _categoriaService;
-
         public IWebHostEnvironment _webHostEnvironment;
-
         public IMapper _mapper;
+        const string semImagem = "semimagem.jpeg";
+        const string defaultPathImgs = "~/imgs/";
 
         public ReceitaController(IReceitaService receitaClient, ICategoriaService categoriaClient, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
@@ -38,24 +38,17 @@ namespace ReceitasDeSucesso.Controllers
         {
             return View("ConsultaReceita", receita);
         }
-
-
+        
         [HttpGet]
-        public async Task<IActionResult> CadastrarReceita()
+        public async Task<IActionResult> Cadastrar()
         {
-            IEnumerable<Categoria> listaCategoria = await ObterCategorias();
+            IEnumerable<Categoria> listaCategoria = await _categoriaService.ObterListaCategoria();
             ReceitaViewModel receitaVM = CriarVMePopularListaDeCategoria(listaCategoria);
             return View(receitaVM);
         }
-
-        private async Task<IEnumerable<Categoria>> ObterCategorias()
+        private static ReceitaViewModel CriarVMePopularListaDeCategoria(IEnumerable<Categoria> listaCategoria, 
+                                                                        ReceitaViewModel receitaVM = null)
         {
-            return await _categoriaService.ObterListaCategoria();
-        }
-
-        private static ReceitaViewModel CriarVMePopularListaDeCategoria(IEnumerable<Categoria> listaCategoria, ReceitaViewModel receitaVM = null)
-        {
-
             if (receitaVM == null)
                 receitaVM = new ReceitaViewModel();
 
@@ -74,7 +67,7 @@ namespace ReceitasDeSucesso.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CadastrarReceita(ReceitaViewModel receitaVm)
+        public async Task<IActionResult> Cadastrar(ReceitaViewModel receitaVm)
         {
             if (!ModelState.IsValid)
             {
@@ -120,14 +113,21 @@ namespace ReceitasDeSucesso.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListarReceita()
+        public async Task<IActionResult> Listar()
         {
             var listaReceitas = await _receitaService.ObterLista();
+            
+            foreach(Receita receita in listaReceitas)
+            {
+                if(receita.Imagem == null)
+                    receita.Imagem = semImagem;
+            }
+
             return View(listaReceitas);
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditarReceita(int? ID)
+        public async Task<IActionResult> Editar(int? ID)
         {
             if (ID == null)
                 return NotFound();
@@ -139,11 +139,11 @@ namespace ReceitasDeSucesso.Controllers
             receitaVM.DescricaoCategoria = receita.Categoria.Descricao;
             receitaVM.TituloCategoria = receita.Categoria.Titulo;
 
-            return View("EditarReceita", CriarVMePopularListaDeCategoria(await _categoriaService.ObterListaCategoria(), receitaVM));
+            return View("Editar", CriarVMePopularListaDeCategoria(await _categoriaService.ObterListaCategoria(), receitaVM));
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditarReceita(ReceitaViewModel receitaViewModel)
+        public async Task<IActionResult> Editar(ReceitaViewModel receitaViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -158,19 +158,23 @@ namespace ReceitasDeSucesso.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> DeletarReceita(int? ID)
+        public async Task<IActionResult> Deletar(int? ID)
         {
             if (ID == null)
                 return NotFound();
-
             var httResponse = await _receitaService.DeletarItem(ID);
-
             return Redirect("/receita/ListarReceita");
         }
 
-        public async Task<IActionResult> ConsultarReceita(int ID)
+        public async Task<IActionResult> Consultar(int ID)
         {
-            return View(await _receitaService.ObterItem(ID));
+            var receita = await _receitaService.ObterItem(ID);
+            if(receita == null)
+                return NotFound();
+            if (receita.Imagem == null )
+                receita.Imagem = Path.Combine(defaultPathImgs, semImagem);
+
+            return View(receita);
         }
     }
 }

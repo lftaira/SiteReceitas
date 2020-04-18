@@ -5,8 +5,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
-    <table class="table">
-        <thead>
+
+    <ul class="list-group list-group-flush">
+        @foreach (var receita in Model)
+        {
+            <li class="list-group-item">
+                <div class="media">
+                    <img class="mr-3" src="~/imgs/@receita.Imagem" alt="">
+                    <div class="media-body"> 
+                        <h5 class="mt-0">@receita.Titulo</h5>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+
+    @* <table class="table table-hover">
+        <thead class="thead-dark">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Titulo)
@@ -58,12 +74,12 @@
                         @Html.DisplayFor(modelItem => item.Categoria.Descricao)
                     </td>
                     <td>
-                        @Html.ActionLink("Alterar", "EditarReceita", new {id = item.ID}) |
+                        @Html.ActionLink("Alterar", "EditarReceita", new {id = item.ID}) | 
                         @Html.ActionLink("Consultar", "ConsultarReceita", new {id = item.ID}) | 
                         @Html.ActionLink("Deletar", "DeletarReceita", new {ID = item.ID}) |
                     </td>
                 </tr>
             }
         </tbody>
-    </table>
+    </table> *@
 </div>

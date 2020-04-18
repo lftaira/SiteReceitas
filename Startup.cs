@@ -77,23 +77,23 @@ namespace ReceitasDeSucesso
 
                     routes.MapRoute(
                     name: "CadastroReceita",
-                    template: "{controller=Receita}/{action=CadastrarReceita}/");
+                    template: "{controller=Receita}/{action=Cadastrar}/");
 
                     routes.MapRoute(
                     name: "Consulta de Receitas",
-                    template: "{controller=Receita}/{action=ListarReceita}/");
+                    template: "{controller=Receita}/{action=Listar}/");
 
                     routes.MapRoute(
                     name: "Editar Receita",
-                    template:"{controller=Receita}/{action=EditarReceita}/{id?}");
-
-                    routes.MapRoute(
-                    name: "Cadastrar Categoria",
-                    template:"{controller=Categoria}/{action=CadastrarCategoria}/");
+                    template:"{controller=Receita}/{action=Editar}/{id?}");
 
                     routes.MapRoute(
                     name: "Deletar Receita",
-                    template:"{controller=Receita}/{action=DeletarReceita}/{ID}");
+                    template:"{controller=Receita}/{action=Deletar}/{ID}");
+
+                    routes.MapRoute(
+                    name: "Cadastrar Categoria",
+                    template:"{controller=Categoria}/{action=Cadastrar}/");
                 }
                 );
         }

@@ -15,31 +15,31 @@ namespace SiteReceitas.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CadastrarCategoria()
+        public IActionResult Cadastrar()
         {
-            return View();
+            return View("CadastrarCategoria");
         }
 
         [HttpPost]
-        public async Task<IActionResult> CadastrarCategoria(Categoria categoria)
+        public async Task<IActionResult> Cadastrar(Categoria categoria)
         {
             var httpResponse = await _categoriaService.InserirItem(categoria);
 
-            TempData["message"] = (httpResponse.IsSuccessStatusCode) ? 
-                "Salvo com sucesso!" : "Erro ao salvar. " + httpResponse.ToString(); 
+            TempData["message"] = (httpResponse.IsSuccessStatusCode) ?
+                "Salvo com sucesso!" : "Erro ao salvar. " + httpResponse.ToString();
 
             return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> RetornarCategoria()
+        public async Task<IActionResult> Listar()
         {
             var listaCategoria = await _categoriaService.ObterListaCategoria();
             return View(listaCategoria);
         }
 
         [HttpPut]
-        public async Task<IActionResult> AlterarCategoria(int id, Categoria categoria)
+        public async Task<IActionResult> Alterar(int id, Categoria categoria)
         {
             var httpResponse = await _categoriaService.AlterarItem(id, categoria);
             return View();
