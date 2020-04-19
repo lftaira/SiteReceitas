@@ -1,6 +1,8 @@
 ﻿body {
     font-family: 'Nunito', sans-serif;
     font-weight: 300;
+    background-color: #280D11;
+    color: #ffffff;
 }
 
 .div-bg-rs{
@@ -26,13 +28,17 @@
     background-color: #280D11;
     color: #ffffff;
     font-weight: 900;
-    
 }
 
 .img-categorias{
     width: 50%;
     height: 400px;
-    
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.img-categorias:hover {
+    transform: scale(1.1);
 }
 
 .img-categorias-salgado{
@@ -49,5 +55,38 @@
     background-position-y: center;
 }
 
+.labeltop{
+    float:left;
+    width: 30%;
+    text-align: center;
+    color: #ffffff;
+    background-color: #280D11;
+}
+
+.labeltop-r{
+    float: right;
+    width: 30%;
+    text-align: center;
+    color: #ffffff;
+    background-color: #280D11;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+  /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+  .sticky + .content {
+    padding-top: 60px;
+  }
+  
+  .navbar-fixed-top { background-color: rgba(40,13,17,0);transition: background-color 0.4s ease 0s;}
+  .navbar-fixed-top.opaque { background-color: rgba(40,13,17,1);transition: background-color 0.4s ease 0s;}
 
 
+  a.footer { color: #333333 }
+  a.footer:active { color: #666666 }
+  a.footer:link { color: #999999 }
+  a.footer:visited { color: #CCCCCC }

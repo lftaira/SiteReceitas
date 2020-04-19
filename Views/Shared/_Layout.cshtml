@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="~/css/site.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
 
-
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-transparent bd-navbar">
+        <nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-fixed-top">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"></a>
                 <img src="~/imgs/sources/logo-completo.svg" height="37" class="d-inline-block align-top" alt=""></a>
                 <button class="navbar-toggler btn-primary" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -38,8 +37,7 @@
         </main>
     </div>
 
-    <footer>
-    </footer>
+
 
      <script 
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -58,9 +56,18 @@
 
     @RenderSection("Scripts", required: false)
 
-    @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false) *@
 </body>
+    <footer >
+        <div class="row mt-3 mb-3">
+            <div class="col">
+                <img src="~/imgs/sources/logo-completo.svg" alt="">
+            </div>
+            <div class="col">
+                <a class="footer" asp-action="Index">Home</a><br>
+                <a class="footer" asp-action="Cadastrar">Cadastrar Receita</a><br>
+                <a class="footer" asp-action="Listar">Consultar Receitas</a>
+            </div>
+        </div>
+    </footer>
 </html>
+

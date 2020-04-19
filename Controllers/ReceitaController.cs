@@ -176,5 +176,18 @@ namespace ReceitasDeSucesso.Controllers
 
             return View(receita);
         }
+
+        public async Task<IActionResult> Doces()
+        {
+            var listaReceita = await _receitaService.ObterLista();
+            return View("Listar", listaReceita.Where(receita => 
+                                    receita.Categoria.Titulo.ToLower().Contains("doce")));
+        }
+        public async Task<IActionResult> Salgados()
+        {
+            var listaReceitas = await _receitaService.ObterLista();
+            return View("Lista", listaReceitas.Where(receita => 
+                                    receita.Categoria.Titulo.ToLower().Contains("salgado")));
+        }
     }
 }
