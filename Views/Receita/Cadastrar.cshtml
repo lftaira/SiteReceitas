@@ -17,7 +17,7 @@
                 <h4>Categoria da Receita</h4>
                 <div class="form-group">
                     <option>Selecione uma categoria</option>
-                    @Html.ActionLink("Nova Categoria", "CadastrarCategoria", "Categoria")
+                    @Html.ActionLink("Nova Categoria", "Cadastrar", "Categoria")
                     <select asp-for="IdCategoria" asp-items="@Model.listaDeCategorias" class="form-control"></select>
                     <span asp-validation-for="IdCategoria" class="text-danger"></span>
                 </div>

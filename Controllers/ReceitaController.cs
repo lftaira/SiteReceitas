@@ -58,7 +58,7 @@ namespace ReceitasDeSucesso.Controllers
             {
                 receitaVM.listaDeCategorias.Add(new SelectListItem
                 {
-                    Text = item.Descricao,
+                    Text = item.Titulo,
                     Value = item.Id.ToString(),
                     Selected = item.Id == receitaVM.IdCategoria
                 });

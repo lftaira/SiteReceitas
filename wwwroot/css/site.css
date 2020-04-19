@@ -1,3 +1,53 @@
-﻿.container-home{
-    height:80vh;
+﻿body {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 300;
 }
+
+.div-bg-rs{
+    content: '';
+    background: url("../imgs/sources/background-burguer.jpg") no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: top;
+    height: 80vh;
+    margin-top: -100px;
+    color: #ffffff;
+    font-weight: 400;
+}
+
+.fontbold{
+    font-weight: 700;
+}
+
+.div-meio{
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background-color: #280D11;
+    color: #ffffff;
+    font-weight: 900;
+    
+}
+
+.img-categorias{
+    width: 50%;
+    height: 400px;
+    
+}
+
+.img-categorias-salgado{
+    background: url("../imgs/sources/salgado.jpg") no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.img-categorias-doce{
+    background: url("../imgs/sources/doce.jpg") no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+
+

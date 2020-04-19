@@ -14,12 +14,9 @@ namespace ReceitasDeSucesso
 
         public static IWebHost BuilderWebHost(string[] args )
         {
-
-
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
-
         }
     }
 }

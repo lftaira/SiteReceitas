@@ -17,7 +17,7 @@ namespace SiteReceitas.Controllers
         [HttpGet]
         public IActionResult Cadastrar()
         {
-            return View("CadastrarCategoria");
+            return View();
         }
 
         [HttpPost]

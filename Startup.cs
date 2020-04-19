@@ -1,8 +1,6 @@
 ﻿using System;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReceitasDeSucesso.Service.Interface;
@@ -22,6 +20,7 @@ namespace ReceitasDeSucesso
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
             CriarServices(services);
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -32,12 +31,9 @@ namespace ReceitasDeSucesso
             {
                 cfg.CreateMap<ReceitaViewModel, Receita>();
                 cfg.CreateMap<Receita, ReceitaViewModel>();
-                cfg.CreateMap<IFormFile, byte[]>();
-                cfg.CreateMap<byte[], IFormFile>();
             });
 
             IMapper mapper = config.CreateMapper();
-
             services.AddSingleton(mapper);
         }
 
