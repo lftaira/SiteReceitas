@@ -6,82 +6,100 @@
 }
 
 <div class="container">
-
-<div class="card bg-light mb-3">
-    <div class="card-header">
-        <div class="d-flex justify-content-center">
-            <h2>Cadastrar nova receita</h2>
-        </div>
-    </div>
-
-<form asp-action="Cadastrar" enctype="multipart/form-data">
-<div class="card-body">
-
-    <div class="row">
-        <div class="col-md-4">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <h4>Categoria da Receita</h4>
-                <div class="form-group">
-                    <option>Selecione uma categoria</option>
-                    <select asp-for="IdCategoria" asp-items="@Model.listaDeCategorias" class="form-control"></select>
-                    <span asp-validation-for="IdCategoria" class="text-danger"></span>
-                </div>
-        </div>
-    </div>
-    <hr />
-    <h4>Receita</h4>
-    <div class="row">
-        <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label">Título</label>
-                    <input asp-for="Titulo" class="form-control" />
-                    <span asp-validation-for="Titulo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Descrição</label>
-                    <textarea asp-for="Descricao" class="form-control"></textarea>
-                    <span asp-validation-for="Descricao" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Ingredientes</label>
-                    <textarea asp-for="Ingredientes" class="form-control"></textarea>
-                    <span asp-validation-for="Ingredientes" class="text-danger"></span>
-                </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="control-label">Modo de Preparo</label>
-                <textarea asp-for="ModoDePreparo" class="form-control"></textarea>
-                <span asp-validation-for="ModoDePreparo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Imagem</label>
-                <div class="custom-file">
-                    <input asp-for="ImagemDaReceita" class="custom-file-input" id="foto" />
-                    <label class="custom-file-label" for="foto">Escolha um arquivo</label>
-                    <span asp-validation-for="ImagemDaReceita" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label">Tags</label>
-                <input asp-for="Tags" class="form-control" />
-                <span asp-validation-for="Tags" class="text-danger"></span>
-            </div>
-            <hr />
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-sm btn-dark" />
-                @TempData["message"]
+    <div class="card card-cadastro mt-3 mb-3">
+        <div class="card-header card-header-cadastro mt-3">
+            <div class="d-flex justify-content-center">
+                <h2>Cadastrar nova receita</h2>
             </div>
         </div>
-    </div>
-</div>
-</form>
-</div>
+        <form asp-action="Cadastrar" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                                <label class="control-label">Título</label>
+                                <input asp-for="Titulo" class="form-control" />
+                                <span asp-validation-for="Titulo" class="text-danger"></span>
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label>Categoria</label>
+                                <select asp-for="IdCategoria" asp-items="@Model.listaDeCategorias" class="form-control"></select>
+                                <span asp-validation-for="IdCategoria" class="text-danger"></span>
+                            </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Imagem</label>
+                            <div class="custom-file">
+                                <input asp-for="ImagemDaReceita" class="custom-file-input" id="foto" />
+                                <label class="custom-file-label" for="foto">Escolha um arquivo</label>
+                                <span asp-validation-for="ImagemDaReceita" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                            <div class="form-group">
+                                <label class="control-label">Descrição</label>
+                                <textarea asp-for="Descricao" class="form-control"></textarea>
+                                <span asp-validation-for="Descricao" class="text-danger"></span>
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="control-label">Ingredientes</label>
+                                <textarea asp-for="Ingredientes" class="form-control"></textarea>
+                                <span asp-validation-for="Ingredientes" class="text-danger"></span>
+                            </div>
+                        </div>
+                </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Modo de Preparo</label>
+                            <textarea asp-for="ModoDePreparo" class="form-control"></textarea>
+                            <span asp-validation-for="ModoDePreparo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Tags</label>
+                            <input asp-for="Tags" class="form-control" />
+                            <span asp-validation-for="Tags" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12 col-md-6">
+                        <a asp-action="Index", asp-controller="Home"><i class="mdi mdi-arrow-left"></i> Voltar para página inicial</a>
+                    </div>
+                    <div class="col-12 col-md-6 text-right">
+                        <div class="form-group">
+                            <input type="submit" data-save="save" value="Salvar" class="btn btn-sm btn-dark" />
+                            @TempData["message"]
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 

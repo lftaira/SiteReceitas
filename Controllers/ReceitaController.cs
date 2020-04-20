@@ -23,8 +23,15 @@ namespace ReceitasDeSucesso.Controllers
         public ICategoriaService _categoriaService;
         public IWebHostEnvironment _webHostEnvironment;
         public IMapper _mapper;
-        const string semImagem = "semimagem.jpeg";
+        const string semImagem = "semimagem.png";
         const string defaultPathImgs = "~/imgs/";
+        public enum WarningType
+        {
+            Success,
+            Info,
+            Warning,
+            Danger
+        }
 
         public ReceitaController(IReceitaService receitaClient, ICategoriaService categoriaClient, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
@@ -38,7 +45,7 @@ namespace ReceitasDeSucesso.Controllers
         {
             return View("ConsultaReceita", receita);
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> Cadastrar()
         {
@@ -46,13 +53,20 @@ namespace ReceitasDeSucesso.Controllers
             ReceitaViewModel receitaVM = CriarVMePopularListaDeCategoria(listaCategoria);
             return View(receitaVM);
         }
-        private static ReceitaViewModel CriarVMePopularListaDeCategoria(IEnumerable<Categoria> listaCategoria, 
+        private static ReceitaViewModel CriarVMePopularListaDeCategoria(IEnumerable<Categoria> listaCategoria,
                                                                         ReceitaViewModel receitaVM = null)
         {
             if (receitaVM == null)
                 receitaVM = new ReceitaViewModel();
 
             receitaVM.listaDeCategorias = new List<SelectListItem>();
+
+            receitaVM.listaDeCategorias.Add(new SelectListItem
+            {
+                Text = "Seleciona uma categoria",
+                Value = null,
+                Selected = true
+            });
 
             foreach (var item in listaCategoria)
             {
@@ -71,15 +85,16 @@ namespace ReceitasDeSucesso.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(receitaVm);
+                return View(CriarVMePopularListaDeCategoria(await _categoriaService.ObterListaCategoria(), receitaVm));
             }
 
             Receita receita = await MapearVMeAtualizarCategoria(receitaVm);
             receita.Imagem = SalvarImagemERetornarGUID(receitaVm);
 
             if (await SalvarReceita(receita))
-                TempData["message"] = "Salvo com sucesso!";
-            return View(receitaVm);
+                TempData["message"] = "Salvo com sucesso";
+                
+            return View("Listar", await _receitaService.ObterLista());
         }
 
         private string SalvarImagemERetornarGUID(ReceitaViewModel receita)
@@ -93,7 +108,7 @@ namespace ReceitasDeSucesso.Controllers
                 pathImagem = Path.Combine(pathImagem, guidImage);
                 using (var fileStream = new FileStream(pathImagem, FileMode.Create))
                 {
-                     receita.ImagemDaReceita.CopyTo(fileStream);
+                    receita.ImagemDaReceita.CopyTo(fileStream);
                 }
             }
             return guidImage;
@@ -116,10 +131,10 @@ namespace ReceitasDeSucesso.Controllers
         public async Task<IActionResult> Listar()
         {
             var listaReceitas = await _receitaService.ObterLista();
-            
-            foreach(Receita receita in listaReceitas)
+
+            foreach (Receita receita in listaReceitas)
             {
-                if(receita.Imagem == null)
+                if (String.IsNullOrWhiteSpace(receita.Imagem))
                     receita.Imagem = semImagem;
             }
 
@@ -169,9 +184,9 @@ namespace ReceitasDeSucesso.Controllers
         public async Task<IActionResult> Consultar(int ID)
         {
             var receita = await _receitaService.ObterItem(ID);
-            if(receita == null)
+            if (receita == null)
                 return NotFound();
-            if (receita.Imagem == null )
+            if (receita.Imagem == null)
                 receita.Imagem = Path.Combine(defaultPathImgs, semImagem);
 
             return View(receita);
@@ -180,13 +195,13 @@ namespace ReceitasDeSucesso.Controllers
         public async Task<IActionResult> Doces()
         {
             var listaReceita = await _receitaService.ObterLista();
-            return View("Listar", listaReceita.Where(receita => 
+            return View("Listar", listaReceita.Where(receita =>
                                     receita.Categoria.Titulo.ToLower().Contains("doce")));
         }
         public async Task<IActionResult> Salgados()
         {
             var listaReceitas = await _receitaService.ObterLista();
-            return View("Lista", listaReceitas.Where(receita => 
+            return View("Listar", listaReceitas.Where(receita =>
                                     receita.Categoria.Titulo.ToLower().Contains("salgado")));
         }
     }

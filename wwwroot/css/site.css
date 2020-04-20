@@ -1,92 +1,164 @@
 ﻿body {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 300;
-    background-color: #280D11;
-    color: #ffffff;
+  font-family: "Nunito", sans-serif;
+  font-weight: 300;
+  background-color: #f2f2f2;
+  overflow-x: hidden;
 }
 
-.div-bg-rs{
-    content: '';
-    background: url("../imgs/sources/background-burguer.jpg") no-repeat;
-    background-size: cover;
-    background-position-x: center;
-    background-position-y: top;
-    height: 80vh;
-    margin-top: -100px;
-    color: #ffffff;
-    font-weight: 400;
+.btn-site{
+  background-color: rgba(40, 13, 17, 1);
+  color: #ffffff;
 }
 
-.fontbold{
-    font-weight: 700;
+.btn-site:hover { 
+  background-color: rgba(40, 13, 17, 0.8);
+  color: #ffffff;
 }
 
-.div-meio{
-    text-align: center;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    background-color: #280D11;
-    color: #ffffff;
-    font-weight: 900;
+.img-consulta{
+  width: 300px;
+  height: 200px;
 }
 
-.img-categorias{
-    width: 50%;
-    height: 400px;
-    cursor: pointer;
-    transition: transform .2s;
+.cor-texto{
+  color: #280d11;
+}
+
+.cor-texto-branco{
+  color: #f2f2f2;
+}
+
+.div-bg-rs {
+  content: "";
+  background: url("../imgs/sources/background-burguer.jpg") no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: top;
+  height: 80vh;
+  margin-top: -100px;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.fontbold {
+  font-weight: 700;
+}
+
+.div-meio {
+  text-align: center;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #280d11;
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.svg-size{
+  height: 20px;
+}
+
+.img-categorias {
+  width: 50%;
+  height: 400px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .img-categorias:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
-.img-categorias-salgado{
-    background: url("../imgs/sources/salgado.jpg") no-repeat;
-    background-size: cover;
-    background-position-x: center;
-    background-position-y: center;
+.img-categorias-salgado {
+  background: url("../imgs/sources/salgado.jpg") no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
 }
 
-.img-categorias-doce{
-    background: url("../imgs/sources/doce.jpg") no-repeat;
-    background-size: cover;
-    background-position-x: center;
-    background-position-y: center;
+.img-categorias-doce {
+  background: url("../imgs/sources/doce.jpg") no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
 }
 
-.labeltop{
-    float:left;
-    width: 30%;
-    text-align: center;
-    color: #ffffff;
-    background-color: #280D11;
-}
-
-.labeltop-r{
-    float: right;
-    width: 30%;
-    text-align: center;
-    color: #ffffff;
-    background-color: #280D11;
+.labeltop {
+  float: left;
+  text-align: center;
+  color: #ffffff;
+  background-color: #280d11;
+  padding: 2px 12px;
 }
 
 .sticky {
-    position: fixed;
-    top: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+
+.navbar-solid{
+  background-color: rgba(40, 13, 17, 1);
+}
+
+.navbar-fixed-top {
+  background-color: rgba(40, 13, 17, 0);
+  transition: background-color 0.4s ease 0s;
+}
+.navbar-fixed-top.opaque {
+  background-color: rgba(40, 13, 17, 1);
+  transition: background-color 0.4s ease 0s;
+}
+
+.card-cadastro{
+  border: none;
+  background-color: #ffffff;
+}
+
+.card-header-cadastro{
+  background-color: #ffffff;
+  border-bottom: none;
+
+}
+
+a.footer {
+  color: #333333;
+}
+a.footer:active {
+  color: #666666;
+}
+a.footer:link {
+  color: #999999;
+}
+a.footer:visited {
+  color: #cccccc;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+footer{
+  background-color: #280d11;
+
+  /* Set the fixed height of the footer here */
+  /* Set the fixed height of the footer here */
+  /* Set the fixed height of the footer here */
+}
+
+/* #####mediaqueries##### */
+
+@media (max-width: 700px) {
+  .img-categorias {
     width: 100%;
   }
-  
-  /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
-  .sticky + .content {
-    padding-top: 60px;
-  }
-  
-  .navbar-fixed-top { background-color: rgba(40,13,17,0);transition: background-color 0.4s ease 0s;}
-  .navbar-fixed-top.opaque { background-color: rgba(40,13,17,1);transition: background-color 0.4s ease 0s;}
+}
 
-
-  a.footer { color: #333333 }
-  a.footer:active { color: #666666 }
-  a.footer:link { color: #999999 }
-  a.footer:visited { color: #CCCCCC }
+.zindex{
+  z-index: 9999;
+}

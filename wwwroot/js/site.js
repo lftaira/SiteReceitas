@@ -1,27 +1,48 @@
 ﻿// When the user scrolls the page, execute myFunction
-window.onscroll = function() {myFunction()};
+window.onscroll = function () {
+  myFunction();
+};
 
+var pagina = window.location.href;
 
 // Get the navbar
 var navbar = document.getElementById("navbar");
-
+var botaonav = document.getElementById("botaonav")
 // Get the offset position of the navbar
 var sticky = navbar.offsetTop;
 
-// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
 function myFunction() {
-  if (window.pageYOffset > sticky) {
-    navbar.classList.add("sticky")
-    $('.navbar-fixed-top').addClass('opaque');
-  } else {
-    navbar.classList.remove("sticky");
-    $('.navbar-fixed-top').removeClass('opaque');
-
+  
+    if (window.location.href.length <= 28 && window.pageYOffset > sticky) {
+      console.log("teste");
+      navbar.classList.add("sticky");
+      $(".navbar-fixed-top").addClass("opaque");
+    } else {
+      navbar.classList.remove("sticky");
+      $(".navbar-fixed-top").removeClass("opaque");
+    }
   }
+
+if (pagina.length >= 31) {
+  $(".navbar")
+    .removeClass("bg-transparent")
+    .removeClass("navbar-fixed-top")
+    .addClass("navbar-solid");
+  document.getElementById("mainid").classList.addClass("cor-texto");
 }
 
-$(window).onscroll(function() {
-    if ($(this).scrollTop() > 0.1) {
+var clicado = false;
+$(document).ready(function() {
+  $('#botaonav').on('click', function() {
+    if (clicado)
+    {
+      $(".navbar").removeClass("navbar-solid").addClass("bg-transparent").addClass("navbar-fixed-top");
+      clicado = false;
     }else{
+      $(".navbar").removeClass("bg-transparent").removeClass("navbar-fixed-top").addClass("navbar-solid");
+      clicado = true;
     }
-})
+  });
+});
+
+

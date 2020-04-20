@@ -7,23 +7,28 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" type="text/css" />
     <link rel="stylesheet" href="~/css/site.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://cdn.materialdesignicons.com/5.1.45/css/materialdesignicons.min.css" rel="stylesheet">
 
 </head>
-<body>
+<body id="bodyid">
     <header>
-        <nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-fixed-top">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"></a>
-                <img src="~/imgs/sources/logo-completo.svg" height="37" class="d-inline-block align-top" alt=""></a>
-                <button class="navbar-toggler btn-primary" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+        <nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-fixed-top zindex">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/imgs/sources/logo-completo.svg" height="37" class="d-inline-block align-top" alt=""></a>
+                </a>
+                <button id="botaonav" class="navbar-toggler btn-site" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="cor-texto-branco"><i class="mdi mdi-menu"></i></span>
                 </button>
                     <ul class="navbar-nav navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                         <li class="">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Categoria" asp-action="Cadastrar">Cadastrar Categoria</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Categoria" asp-action="Cadastrar">Cadastrar categoria</a>
                         </li>
                         <li class="">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Receita" asp-action="Cadastrar">Cadastrar Receita</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Receita" asp-action="Cadastrar">Cadastrar receita</a>
+                        </li>
+                        <li class="">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Receita" asp-action="Listar">Consultar receitas</a>
                         </li>
                         <li class="">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -32,12 +37,10 @@
         </nav>
     </header>
     <div>
-        <main role="main" class="pb-3">
+        <main id="mainid" role="main">
             @RenderBody()
         </main>
     </div>
-
-
 
      <script 
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -57,15 +60,16 @@
     @RenderSection("Scripts", required: false)
 
 </body>
-    <footer >
-        <div class="row mt-3 mb-3">
-            <div class="col">
+    <footer>
+        <div class="d-flex flex-column flex-md-row">
+            <div class="mt-4 ml-3">
                 <img src="~/imgs/sources/logo-completo.svg" alt="">
             </div>
-            <div class="col">
+            <div class="mt-4 mb-4 ml-3">
                 <a class="footer" asp-action="Index">Home</a><br>
-                <a class="footer" asp-action="Cadastrar">Cadastrar Receita</a><br>
-                <a class="footer" asp-action="Listar">Consultar Receitas</a>
+                <a class="footer" asp-action="Listar" asp-controller="Receita">Consultar receitas</a><br>
+                <a class="footer" asp-action="Cadastrar" asp-controller="Receita">Cadastrar receita</a><br>
+                <a class="footer" asp-action="Cadastrar" asp-controller="Categoria">Cadastrar categoria</a><br>
             </div>
         </div>
     </footer>
