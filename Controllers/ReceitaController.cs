@@ -101,7 +101,9 @@ namespace ReceitasDeSucesso.Controllers
         {
             string guidImage = null;
             //2097152
-            if (receita.ImagemDaReceita != null)
+            if (receita.ImagemDaReceita != null || receita.ImagemDaReceita.FileName.ToUpper().EndsWith(".JPEG") ||
+            receita.ImagemDaReceita.FileName.ToUpper().EndsWith(".JPG") || 
+            receita.ImagemDaReceita.FileName.ToUpper().EndsWith(".PNG")) 
             {
                 var pathImagem = Path.Combine(_webHostEnvironment.WebRootPath, "imgs");
                 guidImage = Guid.NewGuid().ToString() + "_" + receita.ImagemDaReceita.FileName.ToString();
