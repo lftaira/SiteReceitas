@@ -106,7 +106,8 @@ namespace ReceitasDeSucesso.Controllers
             receita.ImagemDaReceita.FileName.ToUpper().EndsWith(".PNG")) 
             {
                 var pathImagem = Path.Combine(_webHostEnvironment.WebRootPath, "imgs");
-                guidImage = Guid.NewGuid().ToString() + "_" + receita.ImagemDaReceita.FileName.ToString();
+                
+                guidImage = Guid.NewGuid().ToString() + "_" + Path.GetExtension(receita.ImagemDaReceita.FileName.ToString());
                 pathImagem = Path.Combine(pathImagem, guidImage);
                 using (var fileStream = new FileStream(pathImagem, FileMode.Create))
                 {
